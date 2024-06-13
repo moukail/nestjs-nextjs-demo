@@ -1,0 +1,31 @@
+services:
+  backend:
+    user: root
+    build:
+      context: .docker/backend
+      dockerfile: Dockerfile
+    ports:
+      - '3000'  
+    volumes:
+      - ./backend:/var/www
+    tty: true
+
+  frontend:
+    user: root
+    build:
+      context: .docker/frontend
+      dockerfile: Dockerfile
+    ports:
+      - '3000'  
+    volumes:
+      - ./frontend:/var/www
+    tty: true
+
+  database:
+    image: postgres:16.3-alpine3.20
+    environment:
+      - 'POSTGRES_DB=mydatabase'
+      - 'POSTGRES_PASSWORD=secret'
+      - 'POSTGRES_USER=myuser'
+    ports:
+      - '5432'
